@@ -36,6 +36,13 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
+  height: 100%;
+  padding: 5px;
+  font-size: 14px;
+
+  :focus {
+    outline: none;
+  }
 `;
 
 const Center = styled.div`
