@@ -5,17 +5,26 @@ import CategoryItem from './CategoryItem';
 
 const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
   padding: 20px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Wrapper = styled.div`
+  width: 90vw;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 
 const Categories = () => {
   return (
     <Container>
-      {categories.map((item) => (
-        <CategoryItem item={item} />
-      ))}
+      <Wrapper>
+        {categories.map((item) => (
+          <CategoryItem item={item} />
+        ))}
+      </Wrapper>
     </Container>
   );
 };
