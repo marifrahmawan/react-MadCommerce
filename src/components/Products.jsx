@@ -1,32 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
-import { categories } from '../data';
-import CategoryItem from './CategoryItem';
+import { popularProducts } from '../data';
+import Product from './Product';
 
 const Container = styled.div`
-  display: flex;
   padding: 20px;
+  display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 const Wrapper = styled.div`
-  width: 90vw;
+  width: 100%;
+  /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 `;
 
-const Categories = () => {
+const Products = () => {
   return (
     <Container>
       <Wrapper>
-        {categories.map((item) => (
-          <CategoryItem key={item.id} item={item} />
+        {popularProducts.map((item) => (
+          <Product key={item.id} item={item} />
         ))}
       </Wrapper>
     </Container>
   );
 };
 
-export default Categories;
+export default Products;
