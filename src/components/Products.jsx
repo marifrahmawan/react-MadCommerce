@@ -11,7 +11,6 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 100%;
-  /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
