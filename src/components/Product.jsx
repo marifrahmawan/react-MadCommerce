@@ -7,8 +7,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin: 5px;
-  min-width: 300px;
+  margin: 3px;
+  min-width: calc((100% / 6) - 6px);
   height: 350px;
   display: flex;
   align-items: center;

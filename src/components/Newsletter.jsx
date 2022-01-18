@@ -24,7 +24,7 @@ const Desc = styled.div`
 
 const InputContainer = styled.div`
   width: 50%;
-  height: 40px;
+  height: 60px;
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -37,7 +37,7 @@ const Input = styled.input`
   padding-left: 20px;
 
   &::placeholder {
-    font-size: 16px;
+    font-size: 19px;
   }
 
   &:focus {

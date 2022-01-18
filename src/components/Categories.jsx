@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 90vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;

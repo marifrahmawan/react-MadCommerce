@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  /* flex: 1; */
-  width: 426px;
-  margin: 3px;
+  width: calc(20% - 6px);
   height: 50vh;
   position: relative;
+  margin: 3px;
 `;
 
 const Image = styled.img`
@@ -45,6 +44,7 @@ const CategoryItem = ({ item }) => {
   return (
     <Container>
       <Image src={item.img} />
+
       <Info>
         <Title>{item.title}</Title>
         <Button>SHOP NOW</Button>
