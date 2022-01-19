@@ -21,6 +21,10 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
+
+  @media only screen and (max-width: 480px) {
+    width: 80%;
+  }
 `;
 
 const Title = styled.h1`
@@ -38,6 +42,10 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
+
+  @media only screen and (max-width: 480px) {
+    margin: 11px 0;
+  }
 `;
 
 const Button = styled.button`
@@ -48,6 +56,10 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+
+  @media only screen and (max-width: 480px) {
+    padding: 10px 10px;
+  }
 `;
 
 const Link = styled.a`
