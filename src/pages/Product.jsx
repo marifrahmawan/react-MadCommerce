@@ -96,6 +96,7 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 10px;
+  padding: 2px;
 `;
 
 const Button = styled.button`

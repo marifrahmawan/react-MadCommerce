@@ -20,6 +20,10 @@ const Desc = styled.div`
   font-size: 24px;
   font-weight: 300;
   margin-bottom: 20px;
+
+  @media only screen and (max-width: 480px) {
+    text-align: center;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -28,7 +32,12 @@ const InputContainer = styled.div`
   background-color: white;
   display: flex;
   justify-content: space-between;
-  border: 1px soli lightgray;
+  border: 1px solid lightgray;
+
+  @media only screen and (max-width: 480px) {
+    width: 90%;
+    height: 40px;
+  }
 `;
 
 const Input = styled.input`
@@ -42,6 +51,13 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  @media only screen and (max-width: 480px) {
+    padding-left: 10px;
+    &::placeholder {
+      font-size: 16px;
+    }
   }
 `;
 

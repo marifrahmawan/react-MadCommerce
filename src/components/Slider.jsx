@@ -9,6 +9,10 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+
+  @media only screen and (max-width: 480px) {
+    height: 40vh;
+  }
 `;
 
 const Arrow = styled.div`
@@ -32,6 +36,11 @@ const Arrow = styled.div`
   :hover {
     opacity: 1;
   }
+
+  @media only screen and (max-width: 480px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -47,6 +56,10 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
+
+  @media only screen and (max-width: 480px) {
+    height: 40vh;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -55,6 +68,10 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (max-width: 480px) {
+    height: 70%;
+  }
 `;
 
 const Image = styled.img`
@@ -65,16 +82,28 @@ const Image = styled.img`
   box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.75);
   -webkit-box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.75);
   -moz-box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.75);
+
+  @media only screen and (max-width: 480px) {
+    border-radius: 10px;
+  }
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 50px;
-  max-width: 100%;
+  width: 100%;
+
+  @media only screen and (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 70px;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const Desc = styled.p`
@@ -82,6 +111,11 @@ const Desc = styled.p`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 3px;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 12px;
+    text-align: justify;
+  }
 `;
 
 const Button = styled.button`
@@ -89,6 +123,11 @@ const Button = styled.button`
   font-size: 20px;
   background-color: transparent;
   cursor: pointer;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 10px;
+    padding: 5px;
+  }
 `;
 
 const Slider = () => {

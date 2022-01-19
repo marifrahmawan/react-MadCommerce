@@ -1,11 +1,16 @@
 import { Search, ShoppingCartOutlined } from '@mui/icons-material';
 import React from 'react';
 import styled from 'styled-components';
-
 import Badge from '@mui/material/Badge';
 
 const Container = styled.div`
   height: 60px;
+
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -13,6 +18,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media only screen and (max-width: 480px) {
+    padding: 10px 0px;
+  }
 `;
 
 const Left = styled.div`
@@ -24,6 +33,10 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 14px;
   cursor: pointer;
+
+  @media only screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -32,11 +45,17 @@ const SearchContainer = styled.div`
   align-items: center;
   margin-left: 25px;
   padding: 5px;
+
+  @media only screen and (max-width: 480px) {
+    margin-left: 10px;
+    width: 80px;
+  }
 `;
 
 const Input = styled.input`
   border: none;
   height: 100%;
+  width: 100%;
   padding: 5px;
   font-size: 14px;
 
@@ -52,6 +71,10 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 const Right = styled.div`
@@ -59,12 +82,22 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media only screen and (max-width: 480px) {
+    justify-content: center;
+    flex: 2;
+  }
 `;
 
 const MenuItem = styled.div`
   font-size: 14px;
   margin-left: 25px;
   cursor: pointer;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 12px;
+    margin-left: 10px;
+  }
 `;
 
 const Navbar = () => {
@@ -74,12 +107,12 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input placeholder="Search" />
             <Search style={{ color: 'gray', fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>Cokopedia.</Logo>
+          <Logo>COKPED</Logo>
         </Center>
         <Right>
           <MenuItem>REGISTER</MenuItem>

@@ -8,6 +8,10 @@ const Container = styled.div`
   padding: 20px;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 480px) {
+    padding: 0;
+  }
 `;
 
 const Wrapper = styled.div`

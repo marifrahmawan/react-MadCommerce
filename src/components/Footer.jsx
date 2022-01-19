@@ -12,6 +12,10 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
@@ -54,6 +58,10 @@ const Center = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 30px;
+
+  @media only screen and (max-width: 480px) {
+    margin-bottom: 15px;
+  }
 `;
 
 const List = styled.ul`
@@ -73,6 +81,10 @@ const ListItem = styled.li`
 const Right = styled.div`
   flex: 1;
   padding: 20px;
+
+  @media only screen and (max-width: 480px) {
+    background-color: #fcf5f5;
+  }
 `;
 
 const ContactItem = styled.div`

@@ -16,6 +16,10 @@ const Container = styled.div`
   background-color: #f5fbfd;
   position: relative;
 
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+
   /* &:hover const Info {
     opacity: 1;
   } */
