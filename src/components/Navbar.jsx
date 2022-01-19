@@ -48,6 +48,7 @@ const SearchContainer = styled.div`
 
   @media only screen and (max-width: 480px) {
     margin-left: 10px;
+    margin-right: 5px;
     width: 80px;
   }
 `;
