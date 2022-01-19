@@ -7,11 +7,19 @@ import Navbar from '../components/Navbar';
 
 const Wrapper = styled.div`
   padding: 20px;
+
+  @media only screen and (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const Title = styled.h1`
   font-weight: 300;
   text-align: center;
+
+  @media only screen and (max-width: 480px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Top = styled.div`
@@ -19,19 +27,28 @@ const Top = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+
+  @media only screen and (max-width: 480px) {
+    padding: 0px;
+    margin-bottom: 15px;
+  }
 `;
 
 const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  border: ${(props) => props.type === 'filled' && 'none'};
+  border: ${(props) => props.type === 'filled' && '2px solid black'};
   background-color: ${(props) =>
     props.type === 'filled' ? 'black' : 'transparent'};
   color: ${(props) => props.type === 'filled' && 'white'};
 `;
 
-const TopTexts = styled.div``;
+const TopTexts = styled.div`
+  @media only screen and (max-width: 480px) {
+    display: none;
+  }
+`;
 
 const TopText = styled.span`
   text-decoration: underline;
@@ -42,6 +59,10 @@ const TopText = styled.span`
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const Info = styled.div`
@@ -56,10 +77,16 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const Image = styled.img`
   width: 200px;
+  height: 160px;
+  object-fit: cover;
   border-radius: 10px;
   margin: 10px 0px;
   -webkit-box-shadow: 0px 0px 9px -4px #000000;
@@ -70,6 +97,10 @@ const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 480px) {
+    padding: 20px 0px;
+  }
 `;
 
 const ProductName = styled.span`
@@ -95,7 +126,7 @@ const ProductSize = styled.span`
   color: #a1a1a1;
 `;
 
-const PriceDetails = styled.div`
+const PriceDetail = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -131,6 +162,10 @@ const Hr = styled.hr`
   border: none;
   background-color: #eee;
   height: 2px;
+
+  @media only screen and (max-width: 480px) {
+    margin-bottom: 15px;
+  }
 `;
 
 const Summary = styled.div`
@@ -139,6 +174,10 @@ const Summary = styled.div`
   border-radius: 10px;
   padding: 20px;
   height: 50vh;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const SummaryTitle = styled.h1`
@@ -196,14 +235,14 @@ const Cart = () => {
                   </ProductSize>
                 </Details>
               </ProductDetail>
-              <PriceDetails>
+              <PriceDetail>
                 <ProductAmountContainer>
                   <Add />
                   <ProductAmount>1</ProductAmount>
                   <Remove />
                 </ProductAmountContainer>
                 <ProductPrice>$ 299</ProductPrice>
-              </PriceDetails>
+              </PriceDetail>
             </Product>
             <Hr />
             <Product>
@@ -218,16 +257,18 @@ const Cart = () => {
                   </ProductSize>
                 </Details>
               </ProductDetail>
-              <PriceDetails>
+              <PriceDetail>
                 <ProductAmountContainer>
                   <Add />
                   <ProductAmount>2</ProductAmount>
                   <Remove />
                 </ProductAmountContainer>
                 <ProductPrice>$ 5</ProductPrice>
-              </PriceDetails>
+              </PriceDetail>
             </Product>
+            <Hr />
           </Info>
+
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
