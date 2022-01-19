@@ -19,6 +19,12 @@ const FilterContainer = styled.div`
 
 const Filter = styled.div`
   margin: 20px;
+
+  @media only screen and (max-width: 480px) {
+    margin: 0px 20px;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const FilterText = styled.span`
@@ -26,11 +32,19 @@ const FilterText = styled.span`
   font-weight: 600;
   color: #bebebe;
   margin-right: 20px;
+
+  @media only screen and (max-width: 480px) {
+    margin-right: 0px;
+  }
 `;
 
 const Select = styled.select`
   padding: 10px;
   margin-right: 20px;
+
+  @media only screen and (max-width: 480px) {
+    margin: 10px 0px;
+  }
 `;
 
 const Option = styled.option``;

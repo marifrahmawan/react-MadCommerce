@@ -21,6 +21,10 @@ const Wrapper = styled.div`
   padding: 20px;
   width: 40%;
   background-color: white;
+
+  @media only screen and (max-width: 480px) {
+    width: 80%;
+  }
 `;
 
 const Title = styled.h1`
