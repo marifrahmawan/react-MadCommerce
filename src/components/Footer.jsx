@@ -9,6 +9,7 @@ import {
   YouTube,
 } from '@mui/icons-material';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -126,15 +127,72 @@ const Footer = () => {
       <Center>
         <Title>Useful Links</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>
+            <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+              Home
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/cart" style={{ textDecoration: 'none', color: 'black' }}>
+              Cart
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/products/man"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Man Fashion
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/products/woman"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Woman Fashion
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/accessories"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Accessories
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/profile"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              My Account
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/order-tracking"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Order Tracking
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/wishlist"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Wishlist
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
+              to="/terms"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Terms
+            </Link>
+          </ListItem>
         </List>
       </Center>
       <Right>

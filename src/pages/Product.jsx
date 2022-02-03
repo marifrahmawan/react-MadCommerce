@@ -5,6 +5,7 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
+import GoTop from '../tools/GoTop';
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -190,6 +191,7 @@ const Product = () => {
       </Wrapper>
       <Newsletter />
       <Footer />
+      <GoTop />
     </>
   );
 };

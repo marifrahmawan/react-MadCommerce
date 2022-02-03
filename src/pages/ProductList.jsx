@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
 import Products from '../components/Products';
+import GoTop from '../tools/GoTop';
 
 const Container = styled.div``;
 
@@ -59,8 +60,8 @@ const ProductList = () => {
         <FilterContainer>
           <Filter>
             <FilterText>Filter Products:</FilterText>
-            <Select>
-              <Option disabled selected>
+            <Select defaultValue="color">
+              <Option value="color" disabled>
                 Color
               </Option>
               <Option>White</Option>
@@ -69,8 +70,8 @@ const ProductList = () => {
               <Option>Blue</Option>
               <Option>Yellow</Option>
             </Select>
-            <Select>
-              <Option disabled selected>
+            <Select defaultValue="size">
+              <Option value="size" disabled>
                 Size
               </Option>
               <Option>XS</Option>
@@ -82,8 +83,8 @@ const ProductList = () => {
           </Filter>
           <Filter>
             <FilterText>Sort Products:</FilterText>
-            <Select>
-              <Option selected>Newest</Option>
+            <Select defaultValue="newest">
+              <Option value="newest">Newest</Option>
               <Option>Price (asc)</Option>
               <Option>Price (desc)</Option>
             </Select>
@@ -93,6 +94,7 @@ const ProductList = () => {
       <Products />
       <Newsletter />
       <Footer />
+      <GoTop />
     </>
   );
 };
