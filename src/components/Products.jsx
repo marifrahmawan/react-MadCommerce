@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { popularProducts } from '../data';
 import Product from './Product';
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 0;
   display: flex;
   justify-content: center;
 `;
@@ -14,14 +13,19 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+
+  @media only screen and (max-width: 480px) {
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
-const Products = () => {
+const Products = ({ products }) => {
   return (
     <Container>
       <Wrapper>
-        {popularProducts.map((item) => (
-          <Product key={item.id} item={item} />
+        {products.map((item) => (
+          <Product key={item._id} item={item} />
         ))}
       </Wrapper>
     </Container>

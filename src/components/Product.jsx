@@ -7,17 +7,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin: 3px;
-  min-width: calc((100% / 6) - 6px);
-  height: 350px;
+  margin: 20px;
+  max-width: calc((100% / 5) - 40px);
+  min-width: calc((100% / 5) - 40px);
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5fbfd;
+  background-color: #f5f5f5;
+  border-radius: 15px;
   position: relative;
+  overflow: hidden;
+  box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.5);
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.5);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(148, 148, 148, 0.5);
 
   @media only screen and (max-width: 480px) {
-    width: 100%;
+    max-width: 100%;
+    width: 250px;
+    height: 300px;
   }
 
   /* &:hover const Info {
@@ -34,7 +42,10 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
-  height: 75%;
+  min-width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: 2;
 `;
 
