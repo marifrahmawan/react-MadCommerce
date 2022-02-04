@@ -1,14 +1,16 @@
 import { Add, Remove } from '@mui/icons-material';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { publicRequest } from '../tools/requestMethod';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
 import GoTop from '../tools/GoTop';
+import { cartActions } from '../store/cart-slice';
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -142,24 +144,46 @@ const Button = styled.button`
 
 const Product = () => {
   const param = useParams();
+  const parameter = param.productId;
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState('');
+  const [size, setSize] = useState('');
+  const dispatch = useDispatch();
+
+  const handleQuantity = (type) => {
+    if (type === 'dec' && quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+
+    if (type === 'inc') {
+      setQuantity(quantity + 1);
+    }
+  };
 
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8080/api/products/${param.productId}`
-        );
+        const res = await publicRequest.get(`/products/${parameter}`);
         setProduct(res.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
-
     getProduct();
-  }, [param]);
+  }, [parameter]);
+
+  const addToCartHandler = () => {
+    dispatch(
+      cartActions.addToCart({
+        productId: product._id,
+        price: product.price,
+        quantity: quantity,
+      })
+    );
+  };
 
   return (
     <>
@@ -183,14 +207,18 @@ const Product = () => {
                   <FilterTitle>Color</FilterTitle>
 
                   {product.color.map((color) => (
-                    <FilterColor color={color} />
+                    <FilterColor
+                      color={color}
+                      key={color}
+                      onClick={() => setColor(color)}
+                    />
                   ))}
                 </Filter>
                 <Filter>
                   <FilterTitle>Size</FilterTitle>
-                  <FilterSize>
+                  <FilterSize onChange={(e) => setSize(e.target.value)}>
                     {product.size.map((size) => (
-                      <FilterSizeOption>{size}</FilterSizeOption>
+                      <FilterSizeOption key={size}>{size}</FilterSizeOption>
                     ))}
                   </FilterSize>
                 </Filter>
@@ -198,11 +226,17 @@ const Product = () => {
 
               <AddContainer>
                 <AmountContainer>
-                  <Remove />
-                  <Amount>1</Amount>
-                  <Add />
+                  <Remove
+                    onClick={handleQuantity.bind(null, 'dec')}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <Amount>{quantity}</Amount>
+                  <Add
+                    onClick={handleQuantity.bind(null, 'inc')}
+                    style={{ cursor: 'pointer' }}
+                  />
                 </AmountContainer>
-                <Button>ADD TO CART</Button>
+                <Button onClick={addToCartHandler}>ADD TO CART</Button>
               </AddContainer>
             </InfoContainer>
           </>
