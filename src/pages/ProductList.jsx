@@ -69,14 +69,18 @@ const ProductList = () => {
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getProudcts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/products?category=${category}`
+          category
+            ? `http://localhost:8080/api/products?category=${category}`
+            : `http://localhost:8080/api/products`
         );
         setProducts(res.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -84,6 +88,37 @@ const ProductList = () => {
 
     getProudcts();
   }, [category]);
+
+  useEffect(() => {
+    if (filters) {
+      setFilteredProduct(
+        products.filter((item) =>
+          Object.entries(filters).every(([key, value]) => {
+            if (value !== '') {
+              console.log(value);
+              return item[key].includes(value);
+            }
+
+            if (value === '') {
+              return item;
+            }
+
+            return null;
+          })
+        )
+      );
+    }
+
+    if (sort === 'newest') {
+      setFilteredProduct((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === 'asc') {
+      setFilteredProduct((prev) => [...prev].sort((a, b) => a.price - b.price));
+    } else {
+      setFilteredProduct((prev) => [...prev].sort((a, b) => b.price - a.price));
+    }
+  }, [category, products, filters, sort]);
 
   return (
     <>
@@ -95,20 +130,20 @@ const ProductList = () => {
           <Filter>
             <FilterText>Filter Products:</FilterText>
             <Select name="color" onChange={handleFilters}>
-              <Option>All</Option>
-              <Option>White</Option>
-              <Option>Black</Option>
-              <Option>Red</Option>
-              <Option>Blue</Option>
-              <Option>Yellow</Option>
+              <Option value="">All</Option>
+              <Option value="white">White</Option>
+              <Option value="black">Black</Option>
+              <Option value="red">Red</Option>
+              <Option value="blue">Blue</Option>
+              <Option value="yellow">Yellow</Option>
             </Select>
             <Select name="size" onChange={handleFilters}>
-              <Option>All</Option>
-              <Option>XS</Option>
-              <Option>S</Option>
-              <Option>M</Option>
-              <Option>L</Option>
-              <Option>XL</Option>
+              <Option value="">All</Option>
+              <Option value="XS">XS</Option>
+              <Option value="S">S</Option>
+              <Option value="M">M</Option>
+              <Option value="L">L</Option>
+              <Option value="XL">XL</Option>
             </Select>
           </Filter>
           <Filter>
@@ -121,7 +156,7 @@ const ProductList = () => {
           </Filter>
         </FilterContainer>
       </Container>
-      <Products products={products} />
+      <Products products={filteredProducts} isLoading={isLoading} />
       <Newsletter />
       <Footer />
       <GoTop />

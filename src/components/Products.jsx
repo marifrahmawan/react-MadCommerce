@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import LoadingSpinner from './LoadingSpinner';
 import Product from './Product';
 
 const Container = styled.div`
@@ -20,15 +21,20 @@ const Wrapper = styled.div`
   }
 `;
 
-const Products = ({ products }) => {
+const Products = ({ products, isLoading }) => {
   return (
-    <Container>
-      <Wrapper>
-        {products.map((item) => (
-          <Product key={item._id} item={item} />
-        ))}
-      </Wrapper>
-    </Container>
+    <>
+      {isLoading && <LoadingSpinner />}
+      {!isLoading && (
+        <Container>
+          <Wrapper>
+            {products.map((item) => (
+              <Product key={item._id} item={item} />
+            ))}
+          </Wrapper>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -1,8 +1,11 @@
 import { Add, Remove } from '@mui/icons-material';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
+import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
 import GoTop from '../tools/GoTop';
@@ -81,6 +84,7 @@ const FilterColor = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  border: 1px solid #b6b6b6;
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
@@ -137,57 +141,72 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const param = useParams();
+  const [product, setProduct] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api/products/${param.productId}`
+        );
+        setProduct(res.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getProduct();
+  }, [param]);
+
   return (
     <>
       <Announcement />
       <Navbar />
-
+      {isLoading && <LoadingSpinner />}
       <Wrapper>
-        <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
-        </ImgContainer>
+        {!isLoading && (
+          <>
+            <ImgContainer>
+              <Image src={product.img} />
+            </ImgContainer>
 
-        <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Desc>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            provident unde vero quod autem velit necessitatibus dignissimos esse
-            nihil. Eius dicta eligendi tenetur soluta asperiores officia
-            voluptatem illum culpa voluptatum. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Asperiores autem sunt, corrupti culpa
-            perferendis maxime tempora deserunt, excepturi eveniet dicta quaerat
-            cum totam consequatur? Fuga hic cupiditate ipsam at exercitationem.
-          </Desc>
-          <Price>$ 300</Price>
+            <InfoContainer>
+              <Title>{product.title}</Title>
+              <Desc>{product.desc}</Desc>
+              <Price>Rp. {product.price}</Price>
 
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
+              <FilterContainer>
+                <Filter>
+                  <FilterTitle>Color</FilterTitle>
 
-          <AddContainer>
-            <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
-            </AmountContainer>
-            <Button>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
+                  {product.color.map((color) => (
+                    <FilterColor color={color} />
+                  ))}
+                </Filter>
+                <Filter>
+                  <FilterTitle>Size</FilterTitle>
+                  <FilterSize>
+                    {product.size.map((size) => (
+                      <FilterSizeOption>{size}</FilterSizeOption>
+                    ))}
+                  </FilterSize>
+                </Filter>
+              </FilterContainer>
+
+              <AddContainer>
+                <AmountContainer>
+                  <Remove />
+                  <Amount>1</Amount>
+                  <Add />
+                </AmountContainer>
+                <Button>ADD TO CART</Button>
+              </AddContainer>
+            </InfoContainer>
+          </>
+        )}
       </Wrapper>
       <Newsletter />
       <Footer />
