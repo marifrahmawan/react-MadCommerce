@@ -34,11 +34,30 @@ const cartSlice = createSlice({
     },
 
     removeFromCart(state, action) {
-      const id = action.payload;
+      const decreasedItem = action.payload;
+
       const existingProduct = state.products.find(
-        (product) => product.productId._id === id
+        (product) =>
+          product.productId._id === decreasedItem.productId._id &&
+          product.sizeChoice === decreasedItem.sizeChoice &&
+          product.colorChoice === decreasedItem.colorChoice
       );
-      state.totalQuantity--;
+
+      if (
+        existingProduct.quantity === 1 &&
+        existingProduct.sizeChoice === decreasedItem.sizeChoice &&
+        existingProduct.colorChoice === decreasedItem.colorChoice
+      ) {
+        state.products = state.products.filter(
+          (item) => item._id !== existingProduct._id
+        );
+        state.totalPrice = state.totalPrice - decreasedItem.price;
+        state.totalQuantity--;
+      } else {
+        existingProduct.quantity--;
+        state.totalPrice = state.totalPrice - decreasedItem.price;
+        state.totalQuantity--;
+      }
     },
 
     replaceCart(state, action) {

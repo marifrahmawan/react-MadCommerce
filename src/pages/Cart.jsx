@@ -139,7 +139,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((item) => (
-              <CartProducts item={item} />
+              <CartProducts item={item} key={item._id} />
             ))}
             <Hr />
           </Info>

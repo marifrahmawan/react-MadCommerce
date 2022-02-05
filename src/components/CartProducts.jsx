@@ -1,6 +1,10 @@
 import { Add, Remove } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { sendCartData } from "../store/cart-actions";
+import { cartActions } from "../store/cart-slice";
 
 const Product = styled.div`
   display: flex;
@@ -91,6 +95,52 @@ const ProductPrice = styled.span`
   font-weight: 200;
 `;
 const CartProducts = ({ item }) => {
+  const [initial, setInitial] = useState(true);
+  const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const quantityHandler = (type) => {
+    if (type === "inc") {
+      setInitial(false);
+      dispatch(
+        cartActions.addToCart({
+          productId: item.productId,
+          price: item.price,
+          quantity: 1,
+          sizeChoice: item.sizeChoice,
+          colorChoice: item.colorChoice,
+        })
+      );
+    }
+    if (type === "dec") {
+      setInitial(false);
+      dispatch(
+        cartActions.removeFromCart({
+          productId: item.productId,
+          price: item.price,
+          quantity: 1,
+          sizeChoice: item.sizeChoice,
+          colorChoice: item.colorChoice,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    const sendRequestData = async () => {
+      try {
+        await sendCartData(user?._id, user?.accessToken, cart);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!initial) {
+      sendRequestData();
+    }
+  }, [dispatch, user, cart, initial]);
+
   return (
     <Product key={item._id}>
       <ProductDetail>
@@ -106,9 +156,15 @@ const CartProducts = ({ item }) => {
       </ProductDetail>
       <PriceDetail>
         <ProductAmountContainer>
-          <Add style={{ cursor: "pointer" }} />
+          <Remove
+            style={{ cursor: "pointer" }}
+            onClick={quantityHandler.bind(null, "dec")}
+          />
           <ProductAmount>{item.quantity}</ProductAmount>
-          <Remove style={{ cursor: "pointer" }} />
+          <Add
+            style={{ cursor: "pointer" }}
+            onClick={quantityHandler.bind(null, "inc")}
+          />
         </ProductAmountContainer>
         <ProductPrice>Rp. {item.price}</ProductPrice>
       </PriceDetail>

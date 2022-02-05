@@ -158,12 +158,12 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
-    if (type === "dec" && quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-
     if (type === "inc") {
       setQuantity(quantity + 1);
+    }
+
+    if (type === "dec" && quantity > 1) {
+      setQuantity(quantity - 1);
     }
   };
 
@@ -191,16 +191,6 @@ const Product = () => {
         colorChoice: color ? color : product.color[0],
       })
     );
-
-    // dispatch(
-    //   sendCartData(user?._id, user?.accessToken, {
-    //     productId: product,
-    //     price: product.price,
-    //     quantity: quantity,
-    //     sizeChoice: size ? size : product.size[0],
-    //     colorChoice: color ? color : product.color[0],
-    //   })
-    // );
   };
 
   useEffect(() => {

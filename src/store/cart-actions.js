@@ -38,7 +38,7 @@ export const sendCartData = async (userId, accessToken, productData) => {
       totalPrice: productData.totalPrice,
       totalQuantity: productData.totalQuantity,
     });
-    console.log(productData);
+
     return response;
   } catch (error) {
     console.log(error);
