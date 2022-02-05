@@ -30,17 +30,17 @@ export const fetchCartData = (userId, accessToken) => {
   };
 };
 
-export const sendCartData = (userId, accessToken, productData) => {
-  return async (dispatch) => {
-    const sendData = async () => {
-      dispatch(cartActions.addToCart(productData));
-    };
-
-    try {
-      await sendData();
-      // await userRequest(accessToken).put(`/cart/${userId}`, {});
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export const sendCartData = async (userId, accessToken, productData) => {
+  try {
+    const response = await userRequest(accessToken).put(`/cart/${userId}`, {
+      userId: userId,
+      products: productData.products,
+      totalPrice: productData.totalPrice,
+      totalQuantity: productData.totalQuantity,
+    });
+    console.log(productData);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };

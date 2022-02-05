@@ -153,6 +153,8 @@ const Product = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart);
+  const [initial, setInitial] = useState(true);
   const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
@@ -179,18 +181,9 @@ const Product = () => {
   }, [parameter]);
 
   const addToCartHandler = () => {
-    // dispatch(
-    //   cartActions.addToCart({
-    //     productId: product,
-    //     price: product.price,
-    //     quantity: quantity,
-    //     sizeChoice: size ? size : product.size[0],
-    //     colorChoice: color ? color : product.color[0],
-    //   })
-    // );
-
+    setInitial(false);
     dispatch(
-      sendCartData(user?._id, user?.accessToken, {
+      cartActions.addToCart({
         productId: product,
         price: product.price,
         quantity: quantity,
@@ -198,7 +191,31 @@ const Product = () => {
         colorChoice: color ? color : product.color[0],
       })
     );
+
+    // dispatch(
+    //   sendCartData(user?._id, user?.accessToken, {
+    //     productId: product,
+    //     price: product.price,
+    //     quantity: quantity,
+    //     sizeChoice: size ? size : product.size[0],
+    //     colorChoice: color ? color : product.color[0],
+    //   })
+    // );
   };
+
+  useEffect(() => {
+    const sendRequestData = async () => {
+      try {
+        await sendCartData(user?._id, user?.accessToken, cart);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!initial) {
+      sendRequestData();
+    }
+  }, [dispatch, user, cart, initial]);
 
   return (
     <>
