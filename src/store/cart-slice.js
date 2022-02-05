@@ -16,7 +16,8 @@ const cartSlice = createSlice({
       const existingProduct = state.products.find(
         (product) =>
           product.productId._id === newItem.productId._id &&
-          product.sizeChoice === newItem.sizeChoice
+          product.sizeChoice === newItem.sizeChoice &&
+          product.colorChoice === newItem.colorChoice
       );
 
       if (!existingProduct) {
