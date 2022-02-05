@@ -1,8 +1,10 @@
-import { Search, ShoppingCartOutlined } from '@mui/icons-material';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import Badge from '@mui/material/Badge';
+import { Search, ShoppingCartOutlined } from "@mui/icons-material";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import Badge from "@mui/material/Badge";
+import { Link } from "react-router-dom";
+import { logout } from "../store/user-slice";
 
 const Container = styled.div`
   height: 60px;
@@ -104,6 +106,13 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    window.location.reload();
+  };
 
   return (
     <Container>
@@ -112,20 +121,38 @@ const Navbar = () => {
           <Language>EN</Language>
           <SearchContainer>
             <Input placeholder="Search" />
-            <Search style={{ color: 'gray', fontSize: 16 }} />
+            <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>COKPED</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
-          <MenuItem>
-            <Badge badgeContent={totalQuantity} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          {user !== null && <button onClick={logoutHandler}>Logout</button>}
+          {user === null && (
+            <>
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </>
+          )}
+
+          <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
+            <MenuItem>
+              <Badge badgeContent={totalQuantity} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

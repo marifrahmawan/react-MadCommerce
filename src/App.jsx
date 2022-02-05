@@ -1,14 +1,22 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import Cart from './pages/Cart';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import Product from './pages/Product';
-import ProductList from './pages/ProductList';
-import Register from './pages/Register';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Cart from "./pages/Cart";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import Product from "./pages/Product";
+import ProductList from "./pages/ProductList";
+import Register from "./pages/Register";
+import { fetchCartData } from "./store/cart-actions";
 
 const App = () => {
-  const user = true;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
+
+  useEffect(() => {
+    dispatch(fetchCartData(user?._id, user?.accessToken));
+  }, [dispatch, user]);
 
   return (
     <Routes>

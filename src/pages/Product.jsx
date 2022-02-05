@@ -1,16 +1,18 @@
-import { Add, Remove } from '@mui/icons-material';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { publicRequest } from '../tools/requestMethod';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Navbar from '../components/Navbar';
-import Newsletter from '../components/Newsletter';
-import GoTop from '../tools/GoTop';
-import { cartActions } from '../store/cart-slice';
+import { Add, Remove } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { publicRequest } from "../tools/requestMethod";
+import Announcement from "../components/Announcement";
+import Footer from "../components/Footer";
+import LoadingSpinner from "../components/LoadingSpinner";
+import Navbar from "../components/Navbar";
+import Newsletter from "../components/Newsletter";
+import GoTop from "../tools/GoTop";
+import { cartActions } from "../store/cart-slice";
+import { sendCartData } from "../store/cart-actions";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -148,16 +150,17 @@ const Product = () => {
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState('');
-  const [size, setSize] = useState('');
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
 
   const handleQuantity = (type) => {
-    if (type === 'dec' && quantity > 1) {
+    if (type === "dec" && quantity > 1) {
       setQuantity(quantity - 1);
     }
 
-    if (type === 'inc') {
+    if (type === "inc") {
       setQuantity(quantity + 1);
     }
   };
@@ -176,11 +179,23 @@ const Product = () => {
   }, [parameter]);
 
   const addToCartHandler = () => {
+    // dispatch(
+    //   cartActions.addToCart({
+    //     productId: product,
+    //     price: product.price,
+    //     quantity: quantity,
+    //     sizeChoice: size ? size : product.size[0],
+    //     colorChoice: color ? color : product.color[0],
+    //   })
+    // );
+
     dispatch(
-      cartActions.addToCart({
-        productId: product._id,
+      sendCartData(user?._id, user?.accessToken, {
+        productId: product,
         price: product.price,
         quantity: quantity,
+        sizeChoice: size ? size : product.size[0],
+        colorChoice: color ? color : product.color[0],
       })
     );
   };
@@ -227,13 +242,13 @@ const Product = () => {
               <AddContainer>
                 <AmountContainer>
                   <Remove
-                    onClick={handleQuantity.bind(null, 'dec')}
-                    style={{ cursor: 'pointer' }}
+                    onClick={handleQuantity.bind(null, "dec")}
+                    style={{ cursor: "pointer" }}
                   />
                   <Amount>{quantity}</Amount>
                   <Add
-                    onClick={handleQuantity.bind(null, 'inc')}
-                    style={{ cursor: 'pointer' }}
+                    onClick={handleQuantity.bind(null, "inc")}
+                    style={{ cursor: "pointer" }}
                   />
                 </AmountContainer>
                 <Button onClick={addToCartHandler}>ADD TO CART</Button>
