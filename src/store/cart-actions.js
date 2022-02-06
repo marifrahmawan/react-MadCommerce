@@ -16,12 +16,14 @@ export const fetchCartData = (userId, accessToken) => {
 
     try {
       const cartData = await sendRequestToFetch();
-      // console.log(cartData);
+
       dispatch(
         cartActions.replaceCart({
-          products: cartData.products,
-          totalPrice: cartData.totalPrice,
-          totalQuantity: cartData.totalQuantity,
+          products: cartData.cart.products ? cartData.cart.products : [],
+          totalPrice: cartData.cart.totalPrice ? cartData.cart.totalPrice : 0,
+          totalQuantity: cartData.cart.totalQuantity
+            ? cartData.cart.totalQuantity
+            : 0,
         })
       );
     } catch (error) {
@@ -38,6 +40,20 @@ export const sendCartData = async (userId, accessToken, productData) => {
       totalPrice: productData.totalPrice,
       totalQuantity: productData.totalQuantity,
     });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteCartData = async (userId, accessToken, cartProductId) => {
+  try {
+    const response = await userRequest(accessToken).put(
+      `/cart/remove-cart-product/${userId}`,
+      {
+        cartProductId,
+      }
+    );
 
     return response;
   } catch (error) {

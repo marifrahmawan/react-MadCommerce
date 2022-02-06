@@ -1,10 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import CartProducts from "../components/CartProducts";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { fetchCartData } from "../store/cart-actions";
 import GoTop from "../tools/GoTop";
 
 const Wrapper = styled.div`
@@ -120,7 +121,13 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+
+  useEffect(() => {
+    dispatch(fetchCartData(user?._id, user?.accessToken));
+  }, [dispatch, user]);
 
   return (
     <>
@@ -139,7 +146,10 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((item) => (
-              <CartProducts item={item} key={item._id} />
+              <CartProducts
+                item={item}
+                key={item._id ? item._id : Math.random()}
+              />
             ))}
             <Hr />
           </Info>

@@ -43,16 +43,12 @@ const cartSlice = createSlice({
           product.colorChoice === decreasedItem.colorChoice
       );
 
-      if (
-        existingProduct.quantity === 1 &&
-        existingProduct.sizeChoice === decreasedItem.sizeChoice &&
-        existingProduct.colorChoice === decreasedItem.colorChoice
-      ) {
+      if (existingProduct.quantity === 1) {
+        state.totalPrice = state.totalPrice - decreasedItem.price;
+        state.totalQuantity--;
         state.products = state.products.filter(
           (item) => item._id !== existingProduct._id
         );
-        state.totalPrice = state.totalPrice - decreasedItem.price;
-        state.totalQuantity--;
       } else {
         existingProduct.quantity--;
         state.totalPrice = state.totalPrice - decreasedItem.price;
@@ -61,7 +57,11 @@ const cartSlice = createSlice({
     },
 
     replaceCart(state, action) {
-      state.products = action.payload.products || [];
+      state.products = action.payload.products || {
+        products: [],
+        totalQuantity: 0,
+        totalPrice: 0,
+      };
       state.totalQuantity = action.payload.totalQuantity;
       state.totalPrice = action.payload.totalPrice;
     },

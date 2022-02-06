@@ -1,9 +1,9 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, DeleteOutline, Remove } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { sendCartData } from "../store/cart-actions";
+import { deleteCartData, sendCartData } from "../store/cart-actions";
 import { cartActions } from "../store/cart-slice";
 
 const Product = styled.div`
@@ -95,14 +95,13 @@ const ProductPrice = styled.span`
   font-weight: 200;
 `;
 const CartProducts = ({ item }) => {
-  const [initial, setInitial] = useState(true);
+  const [deleteButton, setDeleteButton] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const quantityHandler = (type) => {
     if (type === "inc") {
-      setInitial(false);
       dispatch(
         cartActions.addToCart({
           productId: item.productId,
@@ -114,7 +113,6 @@ const CartProducts = ({ item }) => {
       );
     }
     if (type === "dec") {
-      setInitial(false);
       dispatch(
         cartActions.removeFromCart({
           productId: item.productId,
@@ -127,19 +125,33 @@ const CartProducts = ({ item }) => {
     }
   };
 
+  const deleteCartProduct = () => {
+    quantityHandler("dec");
+
+    deleteCartData(user?._id, user?.accessToken, item._id);
+  };
+
   useEffect(() => {
     const sendRequestData = async () => {
+      const existingProduct = cart.products.find(
+        (product) => product._id === item._id
+      );
+
       try {
-        await sendCartData(user?._id, user?.accessToken, cart);
+        if (existingProduct.quantity === 1) {
+          setDeleteButton(true);
+          await sendCartData(user?._id, user?.accessToken, cart);
+        } else {
+          setDeleteButton(false);
+          await sendCartData(user?._id, user?.accessToken, cart);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
-    if (!initial) {
-      sendRequestData();
-    }
-  }, [dispatch, user, cart, initial]);
+    sendRequestData();
+  }, [user, cart, item]);
 
   return (
     <Product key={item._id}>
@@ -156,10 +168,17 @@ const CartProducts = ({ item }) => {
       </ProductDetail>
       <PriceDetail>
         <ProductAmountContainer>
-          <Remove
-            style={{ cursor: "pointer" }}
-            onClick={quantityHandler.bind(null, "dec")}
-          />
+          {deleteButton ? (
+            <DeleteOutline
+              style={{ cursor: "pointer" }}
+              onClick={deleteCartProduct}
+            />
+          ) : (
+            <Remove
+              style={{ cursor: "pointer" }}
+              onClick={quantityHandler.bind(null, "dec")}
+            />
+          )}
           <ProductAmount>{item.quantity}</ProductAmount>
           <Add
             style={{ cursor: "pointer" }}
